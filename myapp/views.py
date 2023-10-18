@@ -1,25 +1,27 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from .forms import UserRegistrationForm, UserLoginForm
+from .forms import Loginform
 
-def signup(request):
+def LoginForm(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = Loginform(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                if user.groups.filter(name='Student').exists():
+                    login(request, user)
+                    return redirect('student_dash')
+                elif user.groups.filter(name='Faculty').exists():
+                    login(request, user)
+                    return redirect('faculty_dash')
     else:
-        form = UserRegistrationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        form = Loginform()
+    return render(request, 'registration/Loginform.html', {'form': form})
 
-def login_view(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserLoginForm()
-    return render(request, 'registration/login.html', {'form': form})
+def student_dashboard_view(request):
+    return render(request, 'student_dashboard.html')
+
+def faculty_dashboard_view(request):
+    return render(request, 'faculty_dashboard.html')
