@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Caches
+*.db
+*.sqlite3
+__pycache__/
+*.log
+
+# Environment and deployment-specific files
+.env
+env/
+venv/
+node_modules/
+*.swp
+
+# Media files
+/media/
+
+# Compiled Python files
+*.pyc
+
+# Database
+*.sqlite3
+*.sql
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-*
+
+# Compiled C extensions
+*.so

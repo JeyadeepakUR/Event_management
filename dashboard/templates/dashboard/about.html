@@ -1,0 +1,87 @@
+{% extends 'dashboard/layout.html' %}
+{% load static %}
+
+{% block title %}Dasboard{% endblock %}
+
+{% block header %}
+<div class="header-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-10 col-lg-2 order-lg-1">
+                <div class="site-branding">
+                    <div class="site-title">
+                        <a href="#"><img src="{% static 'dashboard/images/logo.png' %}" alt="logo"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2 col-lg-7 order-3 order-lg-2">
+                <nav class="site-navigation">
+                    <div class="hamburger-menu d-lg-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li class="active-page"><a href="{% url 'about' %}">About us</a></li>
+                        <li><a href="{% url 'events' %}">Events</a></li>
+                        <li><a href="{% url 'elevate' %}">Elevation</a></li>
+                        <li class="bg-danger"><a href="{% url 'logout' %}">Logout</a></li>
+
+                        <li class="d-lg-none">
+                            <div class="buy-tickets">
+                                <a class="btn gradient-bg" href="{% url 'new_event' %}">New Event</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-lg-3 d-none d-lg-block order-2 order-lg-3">
+                <div class="buy-tickets">
+                    <a class="btn gradient-bg" href="{% url 'new_event' %}">New Event</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-header contact-page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <header class="entry-header">
+                    <h1 class="entry-title">About.</h1>
+                </header>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="homepage-next-events">
+    <div class="container">
+        <div class="row">
+            <div class="next-events-section-header">
+                <h2 class="entry-title">What is Synectt?</h2>
+                <p>
+                    Synectt stands as a dynamic platform, uniting the essential cogs in the wheel of event organization. This innovative space harmoniously brings together Participants, Organizers, Sponsors, and Control Authorities in one unified arena.
+                    <br/><br/>
+                    Within this platform, event organizers looking to secure sponsorships can easily request support through a public forum. Willing sponsors, eager to endorse exciting endeavors, can promptly grant their approval. Meanwhile, Control Authorities possess the capability to oversee crucial event details including dates, descriptions, venues, and capacities. Furthermore, if they choose to do so, Control Authorities can offer their valuable expertise and volunteer to ensure the seamless execution of specific events.
+                    <br/><br/>
+                    Synectt is your go-to platform for fostering collaboration among event enthusiasts, enabling events to flourish with efficiency and enthusiasm.
+                </p>
+
+                <h2 class="entry-title">Why Synectt?</h2>
+                <p>
+                    As a prototype of synectt we are implementing it as a web service to our CSE department events. And integrating the students, clubs, faculties and sponsor companies.
+                    <br/><br/>
+                    This project is in development and not a final output, the final output is a mobile app that works as a social media specifically for events.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

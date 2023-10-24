@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Your Page Title{% endblock %}</title>
+    <!-- Include your CSS and JS files here -->
+    {% block linking %} {% endblock %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/style.css' %}">
+    <script src="{% static 'dashboard/js/custom.js' %}"></script>
+</head>
+<body>
+    <header class="site-header">
+        {% block header %}{% endblock %}
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <div class="back-to-top flex justify-content-center align-items-center">
+        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z"/></svg></span>
+    </div>
+
+    <!-- Include your JavaScript files at the end of the body -->
+
+    <script type='text/javascript' src="{% static 'dashboard/js/jquery.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/masonry.pkgd.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/jquery.collapsible.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/swiper.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/jquery.countdown.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/circle-progress.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/jquery.countTo.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'dashboard/js/custom.js' %}"></script>
+</body>
+</html>

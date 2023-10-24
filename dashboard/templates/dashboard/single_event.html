@@ -1,0 +1,190 @@
+{% extends 'dashboard/layout.html' %}
+{% load static %}
+
+{% block title %}Dasboard{% endblock %}
+
+{% block header %}
+<div class="header-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-10 col-lg-2 order-lg-1">
+                <div class="site-branding">
+                    <div class="site-title">
+                        <a href="#"><img src="{% static 'dashboard/images/logo.png' %}" alt="logo"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2 col-lg-7 order-3 order-lg-2">
+                <nav class="site-navigation">
+                    <div class="hamburger-menu d-lg-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About us</a></li>
+                        <li class="active-page"><a href="{% url 'events' %}">Events</a></li>
+                        <li><a href="{% url 'elevate' %}">Elevation</a></li>
+                        <li class="bg-danger"><a href="{% url 'logout' %}">Logout</a></li>
+
+                        <li class="d-lg-none">
+                            <div class="buy-tickets">
+                                <a class="btn gradient-bg" href="{% url 'new_event' %}">New Event</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-lg-3 d-none d-lg-block order-2 order-lg-3">
+                <div class="buy-tickets">
+                    <a class="btn gradient-bg" href="{% url 'new_event' %}">New Event</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-header events-page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <header class="entry-header">
+                    <h1 class="entry-title">Events.</h1>
+                </header>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 single-event">
+            <div class="event-content-wrap">
+                <header class="entry-header flex flex-wrap justify-content-between align-items-end">
+                    <div class="single-event-heading">
+                        <h2 class="entry-title">{{event.event_name}}</h2>
+
+                        <div class="event-location">{{event.event_location}}</div>
+
+                        <div class="event-date">
+                            {{ event.start_datetime|date:"M d, Y @ g:i A" }} - {{ event.end_datetime|date:"M d, Y @ g:i A" }}
+                        </div>
+                    </div>
+
+                    <div class="buy-tickets flex justify-content-center align-items-center">
+                        <a class="btn gradient-bg" href="">Buy Tikets</a>
+                    </div>
+                </header>
+
+                <figure class="events-thumbnail">
+                    <img src="images/summer.jpg" alt="">
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="tabs">
+                <ul class="tabs-nav flex">
+                    <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_details">Details</li>
+                    <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_venue">Venue</li>
+                    <li class="tab-nav flex justify-content-center align-items-center" data-target="#tab_organizers">Organizers</li>
+                </ul>
+
+                <div class="tabs-container">
+                    <div id="tab_details" class="tab-content">
+                        <div class="flex justify-content-between">
+                            <div class="single-event-details">
+                                <div class="single-event-details-row">
+                                    <label>Start:</label>
+                                    <p>{{ event.start_datetime|date:"F j @ H:i A" }}</p>
+                                </div>
+                
+                                <div class="single-event-details-row">
+                                    <label>End:</label>
+                                    <p>{{ event.end_datetime|date:"F j @ H:i A" }}</p>
+                                </div>
+                
+                                <div class="single-event-details-row">
+                                    <label>Price:</label>
+                                    <p>${{ event.entry_fee }}</p>
+                                </div>
+                
+                                <div class="single-event-details-row">
+                                    <label>Categories:</label>
+                                    <p>{{ event.event_type }}</p>
+                                </div>
+                            </div>
+                
+                            <div class="single-event-banner">
+                                <img class="event-banner-img" src="{{ event.event_banner.url }}" alt="{{ event.event_name }}">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div id="tab_venue" class="tab-content">
+                        <p>{{ event.event_description }} to be held at 
+                            <strong>{{ event.event_location }}</strong>
+                        </p>
+                    </div>
+                
+                    <div id="tab_organizers" class="tab-content">
+                        <h3>Name: {{ event.organizer.username }}</h3>
+                        <p>Phone: {{ event.organizer.phone_number }}</p>
+                        <p>Email: {{ event.organizer.email }}</p>
+                        <p>Club: {{ event.organizer.club }}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="upcoming-events">
+                <div class="upcoming-events-header">
+                    <h4>Upcoming Events</h4>
+                </div>
+
+                <div class="upcoming-events-list">
+                    {% for event in upcoming_events %}
+                    <div class="upcoming-event-wrap flex flex-wrap justify-content-between align-items-center">
+                        <figure class="events-thumbnail" style="overflow: hidden;">
+                            <a href="{% url 'event' eid=event.id %}"><img src="{{ event.event_banner.url }}" alt=""></a>
+                        </figure>
+
+                        <div class="entry-meta">
+                            <div class="event-date">
+                                {{ event.start_datetime|date:"j" }}<span>{{ event.start_datetime|date:"F" }}</span>
+                            </div>
+                        </div>
+
+                        <header class="entry-header">
+                            <h3 class="entry-title"><a href="{% url 'event' eid=event.id %}">{{ event.event_name }}</a></h3>
+
+                            <div class="event-date-time">
+                                {{ event.start_datetime|date:"M d, Y @ g:i A" }} - {{ event.end_datetime|date:"M d, Y @ g:i A" }}
+                            </div>
+
+                            <div class="event-speaker">Organizer: {{ event.organizer.username }}</div>
+                        </header>
+
+                        <footer class="entry-footer">
+                            <a href="#">Buy Tikets</a>
+                        </footer>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

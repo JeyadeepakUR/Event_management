@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Home</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007acc;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+
+        h2 {
+            color: #007acc;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007acc;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        #organizer-requests li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        #organizer-requests li * {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, Faculty Member</h1>
+        <p>Your Faculty Dashboard</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showSection('upcoming-events')">Upcoming Events</a></li>
+            <li><a href="#" onclick="showSection('student-list')">Student List</a></li>
+            <li><a href="#" onclick="showSection('organizer-requests')">Organizer Requests</a></li>
+            <li><a href="#" onclick="showSection('current-organizers')">Current Organizers</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+    
+
+    <main>
+        <section id="upcoming-events">
+            <h2>Upcoming Events</h2>
+            <ul>
+                <!-- List of upcoming events -->
+                {% for event in events %}
+                <li><a href="#">{{ event.event_name }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section id="student-list">
+            <h2>Student List</h2>
+            <ul>
+                <!-- List of students -->
+                {% for student in students %}
+                <li>{{ student.username }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section id="organizer-requests">
+            <h2>Organizer Requests</h2>
+            <ul>
+                {% for user in organizer_requests %}
+                <li>
+                    <span class="bullet-point">•</span>
+                    <span class="username">{{ user.username }}</span>
+                    <form method='POST' action="{% url 'org_req' user.id %}">
+                        {% csrf_token %}
+                        <input class="btn btn-success" name="approval" type="submit" value="Approve"/>
+                    </form>
+                    <form method='POST' action="{% url 'org_req' user.id %}">
+                        {% csrf_token %}
+                        <input class="btn btn-danger" name="approval" type="submit" value="Deny"/>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section id="current-organizers">
+            <h2>Current Organizers</h2>
+            <ul>
+                <!-- List of current organizers -->
+                {% for organizer in current_organizers %}
+                <li>{{ organizer.username }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Your University</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            var sections = document.getElementsByTagName('section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].style.display = 'none'; // Hide all sections
+            }
+        
+            document.getElementById(sectionId).style.display = 'block'; // Show the selected section
+        }
+    </script>        
+</body>
+</html>
