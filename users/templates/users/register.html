@@ -1,0 +1,54 @@
+{% load static %}
+
+{% block head %}
+    <meta charset="UTF-8">
+    <title> Register | Synectt </title>
+    <link rel="stylesheet" href="{% static 'signup_styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="title">Registration</div>
+  <div class="content">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="user-details">
+        <div class="input-box">
+          <span class="details">Full Name</span>
+          <input name="username" type="text" placeholder="Enter your name" required>
+        </div>
+        <div class="input-box">
+          <span class="details">Reg. No./Emp. ID</span>
+          <input name="register_number" type="text" placeholder="Enter your reg. no." required>
+        </div>
+        <div class="input-box">
+          <span class="details">Email (Net ID)</span>
+          <input name="net_id" type="text" placeholder="Enter your email" required>
+        </div>
+        <div class="input-box">
+          <span class="details">Phone Number</span>
+          <input name="phone_number" type="text" placeholder="Enter your number" required>
+        </div>
+        <div class="input-box">
+          <span class="details">Password</span>
+          <input name="password" type="text" placeholder="Enter your password" required>
+        </div>
+        <div class="input-box">
+          <span class="details">Confirm Password</span>
+          <input name="password2" type="text" placeholder="Confirm your password" required>
+        </div>
+      </div>
+      <div class="button">
+        <input type="submit" value="Register">
+      </div>
+    </form>
+
+    Already have an account? <a href="{% url 'login' %}">Login Here</a>
+  </div>
+
+  {% if message %}
+      <div>{{ message }}</div>
+  {% endif %}
+</div>
+{% endblock %}
